@@ -10,7 +10,6 @@ class Vehicle:
         return self.__weight
     def getFuel(self):
         return self.__fuel
-
     
 class Bicycle(Vehicle):
     def __str__(self):
