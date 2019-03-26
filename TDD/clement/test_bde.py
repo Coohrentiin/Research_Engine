@@ -18,5 +18,15 @@ class Knownvalues(unittest.TestCase):
             result=bde.toENSTAEmail(firstname, lastname)
             self.assertEqual(mail,result)
 
+    def test_whois(self):
+        for firstname, lastname, statue in self.known_values_whois:
+            result=bde.whoIs(firstname, lastname)
+            self.assertEqual(statue,result)
+
+    def test_respo(self):
+        for statue,firstname in self.known_values_respo:
+            result=bde.findRespo(statue)
+            self.assertEqual(firstname,result)
+
 if __name__ == '__main__':
     unittest.main()
