@@ -35,7 +35,7 @@ def toENSTAEmail(first_name, last_name):
     """convert first_name and last_name to ENSTA Email"""
     if type(first_name) != str or type(last_name) != str:
         raise NotStringError
-    return first_name.replace(" ", "-").lower() + "." + last_name.replace(" ", "-")lower() + "@ensta-paristech.fr"
+    return last_name.replace(" ", "-").lower() + "." + first_name.replace(" ", "-").lower() + "@ensta-paristech.fr"
 
 def findRespo(respo):
     """find the names of the person in charge of the BDE for a given project"""
