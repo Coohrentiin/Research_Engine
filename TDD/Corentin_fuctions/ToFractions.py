@@ -2,8 +2,8 @@
 #This function should receive two integer (postive or not) number and then white au string of factional reduced expression
 ##
 SignTable = {-1: '-', 1: '+'}
-class TypeError: pass
-class DivisionBy0: pass
+class TypeErrore(Exception): pass
+class DivisionBy0(Exception): pass
 
 class fractions:
     def __init__(self,numerator, denominator):
@@ -27,7 +27,7 @@ class fractions:
 
     def check(self):
         if type(self.num)!=int or type(self.den)!=int:
-            raise TypeError
+            raise TypeErrore
         if self.den==0:
             raise DivisionBy0
         return
@@ -52,6 +52,3 @@ class fractions:
                 if primary_a[i]==primary_b[j]:
                     return(primary_a[i])
         return(1)
-
-
-        
