@@ -24,8 +24,6 @@ def nltk_function(text_string):
     
     return wordsFiltered
 
-print(nltk_function("Bonjour je suis, un lapin\n gna/."))
-
 def replace_split(text_string):
     return re.sub("[^a-zA-Z \']+", '', text_string).split()
 
