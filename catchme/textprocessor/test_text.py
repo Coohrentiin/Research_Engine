@@ -1,8 +1,8 @@
 import glob
 import time
-from text import replace_split
-from text import split_function
-from text import irregular_vb_list
+#from text import replace_split
+#from text import split_function
+from text import text_transformation
 
 
 # Function used to compare the speed of different method to clean the data
@@ -20,12 +20,13 @@ def compare_speed():
         split_function(new)
         end2 = time.time() - start2 + end2
         start3 = time.time()
-        nltk_function(new)
+        #nltk_function(new)
         end3 = time.time() - start3 + end3
     return end1, end2, end3
     
 
 # Decomment here what you want to test
 #print(compare_speed())
-irregular_vb_list()
-print(ir_vb)
+
+text1=text_transformation('__SXSWi__Secrets_of_the_news_aggregators.txt','/../..','/SearchEngineProject2/guardian/00')
+print(text1.traited_text)
