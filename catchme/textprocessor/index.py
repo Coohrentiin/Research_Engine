@@ -47,8 +47,8 @@ class index:
         """
         Add a specified file to the index
         """
-        list_words = text_transformation(file_path, "", "")
-        temp_dict = get_occurency(list_words.traited_text)
+        list_words = clean_text(file_path)
+        temp_dict = get_occurency(list_words)
         for word in temp_dict:
             if word not in self.index.keys():
                 self.add_word(word)

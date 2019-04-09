@@ -8,6 +8,13 @@
 import re
 import string
 import os
+
+from nltk.tokenize import word_tokenize
+from nltk.tokenize import RegexpTokenizer
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer 
+
+
 ''' 
 from nltk.corpus import stopwordsapt-
 from nltk.tokenize import sent_tokenize, word_tokenize
@@ -146,3 +153,13 @@ def get_occurency(list_word):
             dictionnary[word]=1
     return(dictionnary)
     
+def clean_text(text_path):
+    tokenizer = RegexpTokenizer(r'\w+')
+    ps = PorterStemmer() 
+    a = open(text_path, "r")
+    text = a.read()
+    token_text = tokenizer.tokenize(text)
+    lowers = [word.lower() for word in token_text]
+    stop_words = set(stopwords.words('english'))
+    filtered_text = [str(ps.stem(w)) for w in lowers if not w in stop_words]
+    return(filtered_text)
