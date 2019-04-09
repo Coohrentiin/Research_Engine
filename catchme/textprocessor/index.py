@@ -3,6 +3,7 @@ import string
 import os
 import glob
 import json
+import math
 from text import *
 
 class index:
@@ -24,16 +25,17 @@ class index:
         """
         path is a folder
         """
-        self.corpus = glob.glob(path)
-        i = 0
+        self.corpus = [[name, 0] for name in glob.glob(path)]
         self.size_corpus=len(self.corpus)
         print("Loading a corpus of " + str(self.size_corpus) + " files")
-        while i < len(self.corpus):
-            self.add_file(self.corpus[i], i)
+        i = 0
+        while i < self.size_corpus:
+            self.add_file(self.corpus[i][0], i)
             i = i + 1
             if i / 100 % 100 == 0:
-                print(str(int(float(i)/len(self.corpus)))+"%")
+                print(str(int(float(i)/self.size_corpus))+"%")
         self.size = len(self.index)
+        self.TFIDF()
         self.save_dict("index", self.index)
         self.save_dict("correspondances", self.corpus)
 
@@ -60,7 +62,7 @@ class index:
             if text_id == occ[0]:
                 occ[1] = occurence
                 return 1
-        self.index[word].append((text_id, occurence))
+        self.index[word].append([text_id, occurence])
 
     def save_dict(self, name, element):
         name=self.path + name + ".json"
@@ -74,13 +76,14 @@ class index:
         return(data)
     
     def TFIDF(self):
-        i=0
-        j=0
-        while word in self.index:
-            while j<self.size_corpus:
-
-                j=j+1
-            i=i+1
+        for word in self.index:
+            i = 0
+            while i < len(self.index[word]):
+                self.index[word][i][1] = self.index[word][i][1] * math.log(self.size_corpus/len(self.index[word]))
+                self.corpus[self.index[word][i][0]][1] += self.index[word][i][1] * self.index[word][i][1]
+                i += 1
+        for document in self.corpus:
+            document[1] = document[1]**(0.5)
 
 
         
