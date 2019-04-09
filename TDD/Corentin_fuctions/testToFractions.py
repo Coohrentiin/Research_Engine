@@ -27,7 +27,7 @@ class KnownValues(unittest.TestCase):
 class ToFractionsBadInput(unittest.TestCase):
     def testDivisonByZero(self):
         """ToFraction should fail with division by zero"""
-        self.assertRaises(ToFractions.DivisionBy0, ToFractions.fractions, 1, 0)
+        self.assertRaises(ToFractions.DivisionBy0, ToFractions.fractions,  1, 0)
     def testDenumeratorNotInteger(self):
         """ToFraction should fail with division by zero"""
         self.assertRaises(ToFractions.TypeErrore, ToFractions.fractions, 1, 1.9)

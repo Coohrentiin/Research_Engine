@@ -1,12 +1,8 @@
 import glob
 import time
-<<<<<<< HEAD
 #from text import replace_split
 #from text import split_function
 from text import text_transformation
-=======
-from text import *
->>>>>>> fc64d15f478a3e3b771ea527c972e459772d8112
 
 
 # Function used to compare the speed of different method to clean the data
