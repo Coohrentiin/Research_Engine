@@ -2,7 +2,7 @@ import glob
 import time
 #from text import replace_split
 #from text import split_function
-from text import text_transformation
+from text import *
 
 
 # Function used to compare the speed of different method to clean the data
@@ -27,7 +27,7 @@ def compare_speed():
     
 
 # Decomment here what you want to test
-#print(compare_speed())
-
+#print(compare_speed()
 text1=text_transformation('__SXSWi__Secrets_of_the_news_aggregators.txt','/../..','/SearchEngineProject2/guardian/00')
-print(text1.traited_text)
+list_word=["e","a","ed","aea","a","e","e","ed"]
+print(get_occurency(text1.traited_text))

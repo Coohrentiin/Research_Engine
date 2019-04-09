@@ -59,16 +59,13 @@ class text_transformation:
         os.chdir(path_of_file)
         self.file=open(name)
         self.All_text=self.file.read()
-        print(self.All_text)
         self.file.close()
         os.chdir(self.current_path)
         self.text_split=self.split_function()
         self.traited_text=[]
         self.irregular_vb_list()
-        print(self.text_split)
         for a_word in self.text_split:
             list_a_word=self.tokenisation(a_word)
-            print(list_a_word)
             for a_piece_of_a_word in list_a_word:
                 if not self.stop_words(a_piece_of_a_word):
                     self.traited_text.append(self.lemmatization(a_piece_of_a_word))
@@ -133,3 +130,19 @@ class text_transformation:
         if len(a_word)>3 and a_word[-3:]=="ing":
             return(a_word[:-3])
         return(a_word)
+
+def get_occurency(list_word):
+    '''
+    This function return a dictionnary with occurency of each words
+    for each word of the list we check if it's in the dictonary
+    if not, we add it and update its occurency
+    else we update its occurency
+    '''
+    dictionnary={}
+    for word in list_word:
+        if word in dictionnary:
+            dictionnary[word]+=1
+        else:
+            dictionnary[word]=1
+    return(dictionnary)
+    
