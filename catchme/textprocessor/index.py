@@ -75,15 +75,19 @@ class index:
             data = json.load(json_file)
         return(data)
     
-    def TFIDF(self):
+    def TFIDF(self, word):
+
+    def Update_TFIDF_Index(self):
         for word in self.index:
             i = 0
             while i < len(self.index[word]):
                 self.index[word][i][1] = self.index[word][i][1] * math.log(self.size_corpus/len(self.index[word]))
+                #self.EuclidianWeight+=self.index[word][i][1]
                 self.corpus[self.index[word][i][0]][1] += self.index[word][i][1] * self.index[word][i][1]
                 i += 1
         for document in self.corpus:
             document[1] = document[1]**(0.5)
+
 
 
         
