@@ -15,19 +15,19 @@ def compare_speed():
         a = open(i, "r")
         new = a.read()
         start1 = time.time()
-        replace_split(new)
+        # replace_split(new)
         end1 = time.time() - start1 + end1
         start2 = time.time()
         # split_function(new)
         end2 = time.time() - start2 + end2
         start3 = time.time()
-        #nltk_function(new)
+        clean_text(i)
         end3 = time.time() - start3 + end3
     return end1, end2, end3
     
 
 # Decomment here what you want to test
-#print(compare_speed()
-text1=text_transformation('__SXSWi__Secrets_of_the_news_aggregators.txt','/../..','/SearchEngineProject2/guardian/00')
-list_word=["e","a","ed","aea","a","e","e","ed"]
-print(get_occurency(text1.traited_text))
+print(compare_speed())
+# text1=text_transformation('__SXSWi__Secrets_of_the_news_aggregators.txt','/../..','/SearchEngineProject2/guardian/00')
+# list_word=["e","a","ed","aea","a","e","e","ed"]
+# print(get_occurency(text1.traited_text))
