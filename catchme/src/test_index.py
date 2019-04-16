@@ -10,4 +10,7 @@ def test_index_creation():
     ind.load_files("input/*")
     print(str(ind.size) + " words have been loaded from a corpus of " + str(len(ind.corpus)) + " files")
 
-test_index_creation()
+def test_index_loader():
+    ind = index.index()
+    ind.load_index("output/index.json", "../output/correspondances.json")
+test_index_loader()
