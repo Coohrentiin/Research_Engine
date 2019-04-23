@@ -9,11 +9,6 @@ from src.text import *
 class index:
 
     def __init__(self):
-        # initialize the index
-        a = open(os.getcwd() + "/output/index.json", "w")
-        a.write("test")
-        a.close()
-
         self.path = os.getcwd() + "/output/" # save where the index is saved
         self.index = {} # table with all the words and their TFIDF and in which document they appear
         # for example index = {"hello": [[0, 0.5], [1, 0.2]]}
@@ -24,10 +19,12 @@ class index:
 
     def load_files(self, path):
         """
+        load_files create the index and corpus objects from a corpus located at path
         path is a folder
+        Example : input/*
         """
         self.corpus = [[name, 0] for name in glob.glob(path)] # complete the corpus with the file found in the folder
-        self.size_corpus=len(self.corpus)
+        self.size_corpus=len(self.corpus) # save the size of the corpus
 
         print("Loading a corpus of " + str(self.size_corpus) + " files")
 
@@ -79,7 +76,7 @@ class index:
             json.dump(element, json_file)
 
     def download_previous(self, path):
-        with open(name) as json_file:
+        with open(path) as json_file:
             data = json.load(json_file)
         return(data)
 
