@@ -2,7 +2,7 @@ import glob
 import time
 #from text import replace_split
 #from text import split_function
-from text import *
+from src.text import *
 
 
 # Function used to compare the speed of different method to clean the data

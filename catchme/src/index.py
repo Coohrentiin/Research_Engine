@@ -4,24 +4,23 @@ import os
 import glob
 import json
 import math
-from text import *
+from src.text import *
 
 class index:
 
     def __init__(self):
         # initialize the index
-        a = open(os.getcwd()[:-3] + "/output/index.json", "w")
+        a = open(os.getcwd() + "/output/index.json", "w")
         a.write("test")
         a.close()
 
-        self.path = os.getcwd()[:-3] + "output/" # save where the index is saved
+        self.path = os.getcwd() + "/output/" # save where the index is saved
         self.index = {} # table with all the words and their TFIDF and in which document they appear
         # for example index = {"hello": [[0, 0.5], [1, 0.2]]}
         self.size = 0 # number of words in the index
         self.corpus = [] # list with the path to the text and its euclidien norm 
         # for example corpus = [["text.txt", 65], ["test3", 0.34]]
         self.size_corpus=0 # number of documents in the corpus
-        print(self.path)
 
     def load_files(self, path):
         """
@@ -55,7 +54,9 @@ class index:
         """
         Add a specified file to the index
         """
-        list_words = clean_text(file_path)
+        a = open(file_path, "r")
+        text = a.read()
+        list_words = clean_text(text)
         temp_dict = get_occurency(list_words)
         for word in temp_dict:
             if word not in self.index.keys():
@@ -103,7 +104,9 @@ class index:
 
     
     def TFIDF(self, word, frequence):
-        return frequence * math.log(self.size_corpus/len(self.index[word]))
+        if word in self.index:
+            return frequence * math.log(self.size_corpus/len(self.index[word]))
+        return 0
 
 
         

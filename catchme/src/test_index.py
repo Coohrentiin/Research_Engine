@@ -2,8 +2,8 @@ import re
 import string
 import os
 import glob
-from text import *
-import index
+from src.text import *
+import src.index
 
 def test_index_creation():
     ind = index.index()

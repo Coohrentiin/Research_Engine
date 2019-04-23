@@ -2,7 +2,7 @@ import re
 import string
 import os
 import glob
-from text import *
+from src.text import *
 
 def test
 ind = index()

@@ -1,4 +1,4 @@
-from query import *
+from src.query import *
 
 def get_request():
     return input("Enter your query (empty to quit): ")
