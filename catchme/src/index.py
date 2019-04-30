@@ -35,7 +35,7 @@ class index:
             i = i + 1
             if i / 100 % 100 == 0:
                 print(str(int(float(i)/self.size_corpus))+"%")
-        self.size = len(self.index)
+        self.size = len(self.index) # save 
         self.Update_TFIDF_Index()
         self.save_dict("index", self.index)
         self.save_dict("corpus", self.corpus)
@@ -53,6 +53,7 @@ class index:
         """
         a = open(file_path, "r")
         text = a.read()
+        a.close()
         list_words = clean_text(text)
         temp_dict = get_occurency(list_words)
         for word in temp_dict:

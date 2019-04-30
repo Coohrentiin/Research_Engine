@@ -146,11 +146,12 @@ def get_occurency(list_word):
     else we update its occurency
     '''
     dictionnary={}
-    for word in list_word:
-        if word in dictionnary:
-            dictionnary[word]+=1
-        else:
-            dictionnary[word]=1
+    if len(list_word) > 0:
+        for word in list_word:
+            if word in dictionnary:
+                dictionnary[word]+=1
+            else:
+                dictionnary[word]=1
     return(dictionnary)
 
 
