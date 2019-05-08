@@ -14,30 +14,8 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer 
 
-
-''' 
-from nltk.corpus import stopwordsapt-
-from nltk.tokenize import sent_tokenize, word_tokenize
-
-# class TextProcessing:
-#     __init__(self,):
-#         file=open(,"r")
-
-def nltk_function(self.All_text):
-    stopWords = list(stopwords.words('english')) + list(string.punctuation)
-    words = word_tokenize(self.All_text)
-    wordsFiltered = []
-    
-    for w in words:
-        if w not in stopWords:
-            wordsFiltered.append(w)
-    
-    return wordsFiltered
-
-print(nltk_function("Bonjour je suis, un lapin\n gna/."))
-'''
-
 def replace_split(text):
+    #text formatting
     return re.sub("[^a-zA-Z \']+", '', text).split()
 
 stop_word_english = {'','ourselves', 'hers', 'between', 'yourself', 'but', 'again', 'there', 'about', 'once', 'during', 'out', 'very', 'having', 'with', 'they', 'own', 'an', 'be', 'some', 'for', 'do', 'its', 'yours', 'such', 'into', 'of', 'most', 'itself', 'other', 'off', 'is', 's', 'am', 'or', 'who', 'as', 'from', 'him', 'each', 'the', 'themselves', 'until', 'below', 'are', 'we', 'these', 'your', 'his', 'through', 'don', 'nor', 'me', 'were', 'her', 'more', 'himself', 'this', 'down', 'should', 'our', 'their', 'while', 'above', 'both', 'up', 'to', 'ours', 'had', 'she', 'all', 'no', 'when', 'at', 'any', 'before', 'them', 'same', 'and', 'been', 'have', 'in', 'will', 'on', 'does', 'yourselves', 'then', 'that', 'because', 'what', 'over', 'why', 'so', 'can', 'did', 'not', 'now', 'under', 'he', 'you', 'herself', 'has', 'just', 'where', 'too', 'only', 'myself', 'which', 'those', 'i', 'after', 'few', 'whom', 't', 'being', 'if', 'theirs', 'my', 'against', 'a', 'by', 'doing', 'it', 'how', 'further', 'was', 'here', 'than'}
@@ -46,10 +24,9 @@ stop_word_english = {'','ourselves', 'hers', 'between', 'yourself', 'but', 'agai
 class text_transformation:
     """
     text1=text_transformation("text1.txt","../../SearchEnginProject2/")
-    text1.traited_text
-    is a list of the text1 words 
+    text1.traited_text  is a list of the text1 words 
 
-    we must code others functions in this class to create the index
+    This "HomeMade" class was our first test to proceceed text whithout NLTK Library
     """
     def __init__(self,name,path_from_here1,path_from_here2):
         """
@@ -78,6 +55,11 @@ class text_transformation:
                     self.traited_text.append(self.lemmatization(a_piece_of_a_word))
 
     def split_function(self):
+        """
+        This fonction take the list of the entire text and create text_in_list whitch is a list of all words of the text
+        the words are separate by punctuation, spaces and subsection. Accents are remplaced by space the traetment of this kind of word will be done by tokenization
+        This function modify "in place" self.All_text by reducing is lenght when have au stop mark,
+        """
         text_in_list=[]
         i=0
         while i <len(self.All_text):
@@ -90,8 +72,13 @@ class text_transformation:
                 self.All_text=self.All_text[i+2:]
                 i=0
             elif self.All_text[i]=="'":
-                self.All_text=self.All_text[:i]+" "+self.All_text[i+1:]
-                i=i+1
+                if self.All_text[i-1]=="n" or self.All_text[i+1]=="s":
+                    self.All_text=self.All_text[:i]+" "+self.All_text[i+1:]
+                    i=i+1
+                else:
+                    text_in_list.append(self.All_text[:i])
+                    self.All_text=self.All_text[i+1:]
+                    i=0                    
             elif self.All_text[i]=='"':
                 self.All_text=self.All_text[:i]+self.All_text[i+1:]
             else:
@@ -99,6 +86,9 @@ class text_transformation:
         return(text_in_list)
 
     def tokenisation(self,a_word):
+        """
+        this function treat a word and delete possesive marks, transform negations marks by "not"
+        """
         n=len(a_word)
         list_word=[]
         if n>=3:
@@ -113,11 +103,18 @@ class text_transformation:
         return list_word
 
     def stop_words(self,a_word):
+        """
+        test if "aword" is a stop word
+        """
         if a_word in stop_word_english:
             return(True)
         return(False)
 
     def irregular_vb_list(self):
+        """
+        create ir_vb which is a global 2D list of irregular vb  
+        and create n_ir_vb which is the number of irregular vb
+        """
         global ir_vb
         ir_vb = []
         crimefile = open("irregularverbs.txt", 'r')
@@ -129,6 +126,9 @@ class text_transformation:
         n_ir_vb = len(ir_vb)
 
     def lemmatization(self,a_word):
+        """
+        delate conjugaisons mark in words by remplacing verbs by their infinitive
+        """
         for i in range(n_ir_vb):
             if a_word in ir_vb[i]:
                 return(ir_vb[i][0])
@@ -158,6 +158,7 @@ def get_occurency(list_word):
 tokenizer = RegexpTokenizer(r'\w+')
 ps = PorterStemmer()   
 stop_words = set(stopwords.words('english'))
+
 def clean_text(text):
     global tokenizer
     global ps  
@@ -166,4 +167,3 @@ def clean_text(text):
     lowers = [word.lower() for word in token_text]
     filtered_text = [str(ps.stem(w)) for w in lowers if not w in stop_words]
     return(filtered_text)
-    
