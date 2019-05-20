@@ -21,23 +21,28 @@ class index:
         path is a folder
         Example : input/*
         """
+        state = 0
         self.corpus = [[name, 0] for name in glob.glob(path)] # complete the corpus with the file found in the folder
         self.size_corpus=len(self.corpus) # save the size of the corpus
-
+        if len(self.corpus) == 0:
+            print("No text files found at " + path)
+            return -1
         print("Loading a corpus of " + str(self.size_corpus) + " files")
 
         # start to load each document in the index
         i = 0
         while i < self.size_corpus: # for each document
             result = self.add_file_to_index(self.corpus[i][0], i) # add the document to the corpus
-            if result == 0:
-                i = i + 1
+            i = i + 1
+            if result !=0:
+                state = -1
             if i / 100 % 100 == 0:
                 print(str(int(float(i)/self.size_corpus))+"%")
         self.size = len(self.index) # save 
         self.Update_TFIDF_Index() # transform the occurences to TFIDF value using the current index
         self.save_dict("index", self.index) #save index in output folder in .jason
-        self.save_dict("corpus", self.corpus) #save corpus (correspondance table) in output folder in .jason
+        self.save_dict("corpus", self.corpus) #save corpus (correspondance table) in output folder in .json
+        return state
 
     def load_index(self, index_path, corpus_path):
         """
@@ -61,10 +66,10 @@ class index:
         """
         try:
             a = open(file_path, "r")
-        except FileNotFoundError:
-            print("Error" + file_path + "not found")
+            text = a.read()
+        except:
+            print("Error: " + file_path + " not found or not *.txt")
             return -1
-        text = a.read()
         a.close()
         list_words = clean_text(text)
         temp_dict = get_occurency(list_words)
@@ -107,9 +112,12 @@ class index:
             temp.close()
         except FileNotFoundError:
             return None
-        with open(path) as json_file:
-            data = json.load(json_file)
-        return(data)
+        try:
+            with open(path) as json_file:
+                data = json.load(json_file)
+            return(data)
+        except:
+            return None
 
     def get_indexed_word(self, word):
         """

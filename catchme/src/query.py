@@ -26,7 +26,7 @@ def HandleQuery(request,index):
         euclidian_query_sum+=weight**2
     euclidian_query_sum=euclidian_query_sum**0.5 #total euclidien sum of the query 
     for doc in doc_list:
-        if doc in correspondances:
+        if len(correspondances) >= int(doc):
             doc_list[doc]=doc_list[doc]/(correspondances[doc][1]*euclidian_query_sum) #calculation of the value of the comparison number between documents
         else:
             return -1
