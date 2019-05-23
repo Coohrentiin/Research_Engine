@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 #!/usr/local/bin/python3.4
 
+
+# !#! WARNINGS !#!
+# note that for this code you need to double check
+# the path to the right folder.
+
 import os,sys,inspect
 from pathlib import Path
 config_index = Path('output/index_image.json')
@@ -31,5 +36,6 @@ req = request_handling(folder_name, saving_path, name_dataset_file, image_name)
 result = list(HandleImageQuery(req,ind))
 result.reverse()
 
+# print result in order
 for r in result:
     print(ind.corpus[r][0])

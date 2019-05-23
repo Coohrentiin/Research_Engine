@@ -19,6 +19,7 @@ from matplotlib import pyplot as plt
 def test_speed():
     ind=index()
     path="SearchEngineProject2/guardian/00/*"
+    #path="input/*"
     state = 0
     ind.corpus = [[name, 0] for name in glob.glob(path)] # complete the corpus with the file found in the folder
     global_corpus=ind.corpus
@@ -41,14 +42,14 @@ def test_speed():
         time_axis.append(time.time()-start)
         number_of_file.append(len(local_corpus))
         number_of_word.append(len(ind.index))
-    fig, ax1 = plt.subplots()
-    ax1.set_xlabel('time (s)')
-    ax1.set_ylabel('number of document loaded')
-    ax1.plot(time_axis,number_of_file,"r")
-    ax2 = ax1.twinx()
-    ax2.set_ylabel('number of words in index')
-    ax1.plot(time_axis,number_of_word,"b")    
-    fig.tight_layout()
+    plt.ylabel('time (s)')
+    plt.xlabel('number of document loaded')
+    plt.plot(number_of_file,time_axis,"r")
+    print(number_of_file)
+    plt.show()
+    plt.ylabel('time (s)')
+    plt.xlabel('number of words in index')
+    plt.plot(number_of_word,time_axis,"b")    
     plt.show()
     return 0
 

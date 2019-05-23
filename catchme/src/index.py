@@ -182,7 +182,7 @@ class index:
         """
         transform the occurences to TFIDF value using the current index
         """
-        for word in self.index:
+        for word in self.index: 
             i = 0
             while i < len(self.index[word]):
                 self.index[word][i][1] = self.TFIDF(word, self.index[word][i][1])
