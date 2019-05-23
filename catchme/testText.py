@@ -1,10 +1,17 @@
+# -*- coding: utf-8 -*-
+#!/usr/local/bin/python3.4
+
 """
 Test Index
 """
-
-import src.text
+import os,sys,inspect
 import unittest
 import os
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+srcdir = currentdir + "/src"
+print(srcdir)
+sys.path.insert(0,srcdir) 
+import text
 
 class KnownValues(unittest.TestCase):
     knownSplitValues = (
@@ -23,12 +30,12 @@ class KnownValues(unittest.TestCase):
 
     def testGetOccurency(self):
         """Should return occurences of words in a text"""
-        for text, result in self.knownSplitValues:
-            self.assertEqual(src.text.get_occurency(text.split()), result)
+        for tex, result in self.knownSplitValues:
+            self.assertEqual(text.get_occurency(tex.split()), result)
     
     def testCleanText(self):
-        for text, result in self.knownCleanValues:
-            self.assertEqual(src.text.clean_text(text), result)
+        for tex, result in self.knownCleanValues:
+            self.assertEqual(text.clean_text(tex), result)
 
 if __name__ == "__main__":
     unittest.main()

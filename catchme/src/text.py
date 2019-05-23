@@ -141,7 +141,7 @@ class text_transformation:
 def get_occurency(list_word):
     '''
     This function return a dictionnary with occurency of each words
-    for each word of the list we check if it's in the dictonary
+    for each word of the list we check if it's in the dictionnary
     if not, we add it and update its occurency
     else we update its occurency
     '''

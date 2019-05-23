@@ -1,13 +1,16 @@
-import os
-current_path=os.getcwd()
-# path= current_path +"/src"
-# os.chdir(path)
-from src.index import *
-from src.query import *
-#os.chdir(current_path)
+# -*- coding: utf-8 -*-
+#!/usr/local/bin/python3.4
+
+import os,sys,inspect
 from pathlib import Path
 config_index = Path('output/index.json')
 config_corpus = Path('output/corpus.json')
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+srcdir = currentdir + "/src"
+sys.path.insert(0,srcdir) 
+from index import *
+from query import *
+
 
 index=index()
 if config_corpus.is_file() & config_index.is_file():
@@ -37,22 +40,28 @@ else:
 if state[0]==-1:
     print("Error:")
     if state[1]==1:
-        print("in loading index: index unreadable. Please download a corpus to create a new index")
+        print("in loading index: index and corpus unreadable. Please build again a text corpus to create a new index")
     elif state[1]==2:
-        print("in loading files: problems encountered during the processing of the texts mentioned above. Please don't manipulate input file during processing, or indicate the path of the corpus.")
+        print("in loading files : problems ecountered during the creation of the index from default input/*. Check the following and try again :")
+        print("- Check if there are only text files in index/*")
+        print("- Do not manipulate files during the index creation")
+        print("- Check if the program has the rights to read the texts")
     elif state[1]==3:
-        print("in loading files: problems encountered during the processing of the texts mentioned above. Please don't manipulate files during processing, you can also use input folder or give the path of another folder.")
+        print("in loading files : problems encountered during the creation of the index. Check the following and try again :")
+        print("- Check if there are only text files in the given path")
+        print("- Do not manipulate files during the index creation")
+        print("- try to use the default input/* folder to check if the problem comes from somewhere else.")
 else:
     request=input("lets start? Please give us a request. Enter (N) to stop: ")
     while request != "N":
         result = HandleQuery(request,index)
-        print("Results in order of pertinence")
         if result==-1:
-            print("Error: during the processing the manipulation of the index for request traetment. Index doens't match with corpus. Please download again corpus")
+            print("Error: during the processing the manipulation of the index for request treatment. Index doesn't match with corpus. Please quit and rebuild index")
         elif len(result) == 0:
-            print("{empty: No document for this answer}")
+            print("{empty: No document for this request}")
         else:
+            print("Results in order of pertinence")
             for r in result:
                 print(index.corpus[r][0])
-        request=input("lets start? Please give us a request. Enter (N) to stop: ")
+        request=input("Please give us a request. Enter (N) to stop: ")
     print("See you later aligator")

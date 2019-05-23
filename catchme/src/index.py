@@ -1,8 +1,9 @@
 import os
 import glob
 import json
+import time
 import math
-from src.text import *
+from text import *
 
 class index:
 
@@ -21,23 +22,61 @@ class index:
         path is a folder
         Example : input/*
         """
+        state = 0
         self.corpus = [[name, 0] for name in glob.glob(path)] # complete the corpus with the file found in the folder
         self.size_corpus=len(self.corpus) # save the size of the corpus
-
+        if len(self.corpus) == 0:
+            print("No text files found at " + path)
+            return -1
         print("Loading a corpus of " + str(self.size_corpus) + " files")
-
+        start = time.time()
         # start to load each document in the index
         i = 0
         while i < self.size_corpus: # for each document
             result = self.add_file_to_index(self.corpus[i][0], i) # add the document to the corpus
-            if result == 0:
-                i = i + 1
+            i = i + 1
+            if result !=0:
+                state = -1
             if i / 100 % 100 == 0:
                 print(str(int(float(i)/self.size_corpus))+"%")
         self.size = len(self.index) # save 
         self.Update_TFIDF_Index() # transform the occurences to TFIDF value using the current index
         self.save_dict("index", self.index) #save index in output folder in .jason
-        self.save_dict("corpus", self.corpus) #save corpus (correspondance table) in output folder in .jason
+        self.save_dict("corpus", self.corpus) #save corpus (correspondance table) in output folder in .json
+        end = time.time()
+        print("Index created in " + str(end - start))
+        return state
+    
+    def load_images(self, features):
+        """
+        load_images create the index and corpus objects from a given dictionnary
+        that represents image and features
+        Example : input/*
+        """
+        state = 0
+        self.corpus = [[name, 0] for name in list(features.keys())]  # complete the corpus with the file found in the folder
+        self.size_corpus=len(self.corpus) # save the size of the corpus
+        if len(self.corpus) == 0:
+            print("No image files")
+            return -1
+        print("Loading a corpus of " + str(self.size_corpus) + " files")
+        start = time.time()
+        # start to load each document in the index
+        i = 0
+        for image in features:
+            result = self.add_image_to_index(features[image], i) # add the document to the corpus
+            i = i + 1
+            if result !=0:
+                state = -1
+            if i / 100 % 10 == 0:
+                print(str(int(float(i)/self.size_corpus))+"%")
+        self.size = len(self.index) # save 
+        self.Update_TFIDF_Index() # transform the occurences to TFIDF value using the current index
+        self.save_dict("index_image", self.index) #save index in output folder in .jason
+        self.save_dict("corpus_image", self.corpus) #save corpus (correspondance table) in output folder in .json
+        end = time.time()
+        print("Index created in " + str(end - start))
+        return state
 
     def load_index(self, index_path, corpus_path):
         """
@@ -61,10 +100,10 @@ class index:
         """
         try:
             a = open(file_path, "r")
-        except FileNotFoundError:
-            print("Error" + file_path + "not found")
+            text = a.read()
+        except:
+            print("Error: " + file_path + " not found or not *.txt")
             return -1
-        text = a.read()
         a.close()
         list_words = clean_text(text)
         temp_dict = get_occurency(list_words)
@@ -74,6 +113,16 @@ class index:
             self.update_occurence(word, text_id, temp_dict[word])
         return 0
     
+    def add_image_to_index(self, image, idimg):
+        """
+        Same than add_file_to_index but for images
+        """
+        temp_dict = get_occurency(image)
+        for word in temp_dict:
+            if word not in self.index.keys():
+                self.add_word(word)
+            self.update_occurence(word, idimg, temp_dict[word])
+
     def add_word(self, word):
         """
         Add a word in the index
@@ -107,9 +156,12 @@ class index:
             temp.close()
         except FileNotFoundError:
             return None
-        with open(path) as json_file:
-            data = json.load(json_file)
-        return(data)
+        try:
+            with open(path) as json_file:
+                data = json.load(json_file)
+            return(data)
+        except:
+            return None
 
     def get_indexed_word(self, word):
         """
