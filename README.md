@@ -5,10 +5,17 @@ GitHub_repository_in104
 Catch me is the folder of the search engine.
 * main.py : script to launch the search engine for text files
 * main_image.py : script to launch the search engine for images.
+
+
+
 Note 1: that you need to launch the program using python3
+
 Note 2: Double check the files path in particular in main_image.py
+
 Note 3: You have example on how to use the src files in the testText.py and testIndex.py (TDD for our project)
+
 Note 4: In catchme/documentation you can find documentation on the different function. To open the uml file you can use umbrello https://umbrello.kde.org/ 
+
 If you have any issues launching the project please contact either :
 corentin.soubeiran@ensta-paristech.fr
 clement.caporal@ensta-paristech.fr
