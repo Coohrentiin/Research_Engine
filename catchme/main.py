@@ -17,7 +17,7 @@ if config_corpus.is_file() & config_index.is_file():
     answer=input("A previous corpus is already saved. Do you want to use it? Y/N: ")
     if answer=="Y":
         #dowload the previous index and corpus
-        state=(index.load_index(current_path+"/output/index.json", current_path+"/output/corpus.json"),1)
+        state=(index.load_index(currentdir+"/output/index.json", currentdir+"/output/corpus.json"),1)
     else:
         answer=input("Do you want to use the corpus in the input folder (Y)? Or another (N)? ")
         if answer=="Y":
